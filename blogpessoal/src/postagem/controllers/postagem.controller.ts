@@ -47,7 +47,7 @@ export class PostagemController {
     return this.PostagemService.update(postagem);
   }
 
-  @Delete()
+  @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.PostagemService.delete(id);
