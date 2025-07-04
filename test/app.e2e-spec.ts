@@ -38,12 +38,13 @@ describe('AppController (e2e)', () => {
       .post('/usuarios/cadastrar')
       .send({
         nome: 'Root',
-        usuario: 'root@root.com',
-        senha: 'rootroot',
+        usuario: 'joao.pedro@example.com',
+        senha: 'jp@123!%@',
         foto: '-',
       })
       .expect(201);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     usuarioId = resposta.body.id;
   });
 
@@ -52,8 +53,8 @@ describe('AppController (e2e)', () => {
       .post('/usuarios/cadastrar')
       .send({
         nome: 'Root',
-        usuario: 'root@root.com',
-        senha: 'rootroot',
+        usuario: 'joao.pedro@example.com',
+        senha: 'jp@123!%@',
         foto: '-',
       })
       .expect(400);
@@ -63,17 +64,18 @@ describe('AppController (e2e)', () => {
     const resposta = await request(app.getHttpServer())
       .post('/usuarios/logar')
       .send({
-        usuario: 'root@root.com',
-        senha: 'rootroot',
+        usuario: 'joao.pedro@example.com',
+        senha: 'jp@123!%@',
       })
       .expect(200);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     token = resposta.body.token;
   });
 
   it('04 - Deve Listar todos os Usuários', async () => {
     return request(app.getHttpServer())
-      .get('/usuarios/all')
+      .get('/usuarios')
       .set('Authorization', `${token}`)
       .send({})
       .expect(200);
@@ -84,14 +86,16 @@ describe('AppController (e2e)', () => {
       .put('/usuarios/atualizar')
       .set('Authorization', `${token}`)
       .send({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         id: usuarioId,
         nome: 'Root Atualizado',
-        usuario: 'root@root.com',
-        senha: 'rootroot',
+        usuario: 'joao.pedro@example.com',
+        senha: 'jp@123!%@',
         foto: '-',
       })
       .expect(200)
       .then((resposta) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         expect('Root Atualizado').toEqual(resposta.body.nome);
       });
   });
